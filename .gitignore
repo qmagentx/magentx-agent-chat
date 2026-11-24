@@ -1,0 +1,28 @@
+# ===== Bí mật – KHÔNG BAO GIỜ đưa lên GitHub =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+google-service-account*.json
+
+# ===== Thư viện và file sinh ra khi chạy =====
+node_modules/
+dist/
+coverage/
+*.log
+logs/
+*.tsbuildinfo
+
+# ===== Dữ liệu trên máy, không phải code =====
+media/*
+!media/README.md
+backups/*
+!backups/README.md
+
+# ===== File hệ thống / công cụ =====
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/settings.local.json
