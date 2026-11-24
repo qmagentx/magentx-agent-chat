@@ -19,12 +19,12 @@ export const envSchema = z.object({
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 
   WEBHOOK_SECRET_PATH: z
-    .string()
+    .string({ error: 'bắt buộc – mã bí mật dài gắn trên địa chỉ webhook' })
     .min(24, 'cần ít nhất 24 ký tự ngẫu nhiên (mã bí mật trên địa chỉ webhook)')
     .regex(/^[A-Za-z0-9_-]+$/, 'chỉ dùng chữ, số, gạch ngang, gạch dưới'),
 
   DATABASE_URL: z
-    .string()
+    .string({ error: 'bắt buộc – địa chỉ kết nối PostgreSQL cho tài khoản bot_app' })
     .min(1, 'bắt buộc – địa chỉ kết nối PostgreSQL cho tài khoản bot_app')
     .regex(/^postgres(ql)?:\/\//, 'phải bắt đầu bằng postgresql://'),
   DATABASE_ADMIN_URL: optionalString,
@@ -69,7 +69,7 @@ export class EnvError extends Error {
 export function loadEnv(source?: Record<string, string | undefined>): Env {
   let input = source;
   if (!input) {
-    loadDotenv();
+    loadDotenv({ quiet: true });
     input = process.env;
   }
   const result = envSchema.safeParse(input);
