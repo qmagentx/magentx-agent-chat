@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+package-lock.json
+docs/
+prompts/
+media/
+backups/
+apps-script/
+*.md
