@@ -8,6 +8,8 @@ export const QUEUES = {
   pancakeWebhook: 'pancake-webhook',
   /** Nhịp tim ra Apps Script, mỗi phút, do phần xử lý hàng chờ gửi */
   heartbeat: 'heartbeat',
+  /** Sao lưu database mã hóa, 2 giờ/lần (GĐ3 mục 9.2) */
+  backup: 'backup',
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];

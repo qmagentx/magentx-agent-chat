@@ -43,6 +43,8 @@ export const envSchema = z.object({
   HEARTBEAT_SECRET: optionalString,
 
   BACKUP_PASSWORD: optionalString,
+  BACKUP_READER_PASSWORD: optionalString,
+  PG_BIN_DIR: optionalString,
   GOOGLE_SERVICE_ACCOUNT_FILE: optionalString,
   DRIVE_BACKUP_FOLDER_ID: optionalString,
 });

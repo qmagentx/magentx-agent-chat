@@ -11,6 +11,7 @@ import { PancakeClient } from './pancake/client.js';
 import { startPoll } from './pancake/poll.js';
 import { sendHeartbeat } from './heartbeat/sender.js';
 import { createTelegramBot } from './telegram/bot.js';
+import { runBackup } from './backup/backup.js';
 
 /** Liệt kê tên các trường ở tầng ngoài của sự kiện (để biết Pancake gửi gì), không ghi nội dung. */
 function topLevelKeys(body: unknown): string[] {
@@ -126,6 +127,17 @@ async function main(): Promise<void> {
     log.warn(
       'Nhịp tim: chỉ ghi vào database (chưa có HEARTBEAT_URL / HEARTBEAT_SECRET trong .env)',
     );
+  }
+
+  // 7. Sao lưu mã hóa 2 giờ/lần (phút 0 của giờ chẵn). Lỗi → ghi log; cảnh báo Telegram làm ở GĐ6.
+  if (env.BACKUP_PASSWORD) {
+    await boss.work(QUEUES.backup, async () => {
+      await runBackup(env, log);
+    });
+    await boss.schedule(QUEUES.backup, '0 */2 * * *');
+    log.info('Sao lưu: 2 giờ/lần vào backups/ (Drive khi có tài khoản dịch vụ)');
+  } else {
+    log.warn('Sao lưu: BỎ QUA vì chưa có BACKUP_PASSWORD trong .env');
   }
 
   log.info('Khởi động xong. Bấm Ctrl+C để dừng.');

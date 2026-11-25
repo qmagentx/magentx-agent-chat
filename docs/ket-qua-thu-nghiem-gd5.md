@@ -40,7 +40,7 @@ Fanpage thử: (điền tên/ID). Ngày bắt đầu thử: (điền).
 |---|---|---|---|---|
 | D1 | ngrok ổn định qua đêm | Chưa thử | | |
 | D2 | Tắt/bật bot nhặt đủ tin sót, không ghi trùng (phần nhận tin) | Chưa thử | | |
-| D3 | Sao lưu và khôi phục | Chưa thử | | |
+| D3 | Sao lưu và khôi phục | Đạt một phần (25/11) | Sao lưu mã hóa + khôi phục thử vào database tạm: 19 bảng khớp (bảng system_state lệch 1 dòng do bot ghi sau lúc chụp). Chưa đẩy lên Drive: chờ tài khoản dịch vụ Google. | GĐ6: viết phần đẩy Drive + cảnh báo A10 khi sao lưu lỗi/quá 4 giờ |
 
 ## Đã thử trong máy (không cần tài khoản thật) – 25/11/2026
 | Việc | Kết quả |
