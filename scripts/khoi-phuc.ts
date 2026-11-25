@@ -12,15 +12,18 @@ async function main(): Promise<void> {
   const file =
     process.argv[2] ?? (await latestBackupFile('backups', databaseNameOf(env.DATABASE_URL)));
   const r = await restoreToScratch(env, log, file);
+
   process.stdout.write(`\nFile: ${r.file}\nDatabase tạm: ${r.scratchDb}\n`);
   for (const t of r.tables) {
+    const dau = t.match ? '✓' : t.live ? '~' : '✗';
+    const ghiChu = !t.match && t.live ? '  (bảng bot ghi liên tục, lệch nhỏ là bình thường)' : '';
     process.stdout.write(
-      `  ${t.match ? '✓' : '✗'} ${t.table.padEnd(24)} nguồn ${t.source}  khôi phục ${t.restored}\n`,
+      `  ${dau} ${t.table.padEnd(24)} nguồn ${t.source}  khôi phục ${t.restored}${ghiChu}\n`,
     );
   }
   process.stdout.write(
     r.allMatch
-      ? 'KẾT QUẢ: khôi phục khớp toàn bộ.\n'
+      ? 'KẾT QUẢ: khôi phục khớp (dòng ~ chỉ lệch do bot đang ghi).\n'
       : 'KẾT QUẢ: CÓ BẢNG KHÔNG KHỚP – xem dòng ✗.\n',
   );
   if (!r.allMatch) process.exit(2);
